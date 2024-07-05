@@ -20,6 +20,22 @@
         <servlet-name>LogoutController</servlet-name>
         <servlet-class>controller.auth.LogoutController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControllerLogout</servlet-name>
+        <servlet-class>controller.auth.ControllerLogout</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StudentScoreServlet</servlet-name>
+        <servlet-class>ViewScore.StudentScoreServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ExamResultServlet</servlet-name>
+        <servlet-class>ViewScore.ExamResultServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewGradesController</servlet-name>
+        <servlet-class>controller.exam.ViewGradesController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControllerLogin</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -31,5 +47,13 @@
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/exam/lecturer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControllerLogout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewGradesController</servlet-name>
+        <url-pattern>/student/grades</url-pattern>
     </servlet-mapping>
 </web-app>

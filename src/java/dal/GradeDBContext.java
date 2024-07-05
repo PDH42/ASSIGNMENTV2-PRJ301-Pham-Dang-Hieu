@@ -1,145 +1,69 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dal;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.Exam;
 import model.Grade;
-import model.Student;
 
-/**
- *
- * @author sonnt-local
- */
-public class GradeDBContext extends DBContext<Grade> {
+public class GradeDBContext {
 
-    public ArrayList<Grade> getGradesFromExamIds(ArrayList<Integer> eids) {
+    // Method to get grades by exam IDs
+    public ArrayList<Grade> getGradesByExamIds(ArrayList<Integer> examIds) {
         ArrayList<Grade> grades = new ArrayList<>();
-        PreparedStatement stm = null;
         try {
-            String sql = "SELECT eid,sid,score FROM grades WHERE (1>2)";
-            for (Integer eid : eids) {
-                sql += " OR eid = ?";
-            }
-
-            stm = connection.prepareStatement(sql);
-
-            for (int i = 0; i < eids.size(); i++) {
-                stm.setInt((i + 1), eids.get(i));
-            }
-
-            ResultSet rs = stm.executeQuery();
+            Connection conn = getConnection();
+            String sql = "SELECT * FROM grades WHERE exam_id IN (?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, examIds.toString().replace("[", "").replace("]", ""));
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Grade g = new Grade();
-                g.setScore(rs.getFloat("score"));
-
-                Student s = new Student();
-                s.setId(rs.getInt("sid"));
-                g.setStudent(s);
-
-                Exam e = new Exam();
-                e.setId(rs.getInt("eid"));
-                g.setExam(e);
-
-                grades.add(g);
+                Grade grade = new Grade();
+                grade.setScore(rs.getFloat("score"));
+                // Set other properties of grade as needed
+                grades.add(grade);
             }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(GradeDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                stm.close();
-                connection.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(GradeDBContext.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return grades;
     }
 
-    public void insertGradesForCourse(int cid, ArrayList<Grade> grades) {
-        String sql_remove = "DELETE grades WHERE sid IN (SELECT sid FROM students_courses WHERE cid = ?)";
-        String sql_insert = "INSERT INTO [grades]\n"
-                + "           ([eid]\n"
-                + "           ,[sid]\n"
-                + "           ,[score])\n"
-                + "     VALUES\n"
-                + "           (?\n"
-                + "           ,?\n"
-                + "           ,?)";
-        
-        PreparedStatement stm_remove =null;
-        ArrayList<PreparedStatement> stm_inserts = new ArrayList<>();
-        
+    // Method to insert grades for a course
+    public void insertGradesForCourse(int courseId, ArrayList<Grade> grades) {
         try {
-            connection.setAutoCommit(false);
-            stm_remove = connection.prepareStatement(sql_remove);
-            stm_remove.setInt(1, cid);
-            stm_remove.executeUpdate();
-            
+            Connection conn = getConnection();
+            String sql = "INSERT INTO grades (course_id, student_id, exam_id, score) VALUES (?, ?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
             for (Grade grade : grades) {
-                PreparedStatement stm_insert = connection.prepareStatement(sql_insert);
-                stm_insert.setInt(1, grade.getExam().getId());
-                stm_insert.setInt(2,grade.getStudent().getId());
-                stm_insert.setFloat(3, grade.getScore());
-                stm_insert.executeUpdate();
-                stm_inserts.add(stm_insert);
+                ps.setInt(1, courseId);
+                ps.setInt(2, grade.getStudent().getId());
+                ps.setInt(3, grade.getExam().getId());
+                ps.setFloat(4, grade.getScore());
+                ps.addBatch();
             }
-            connection.commit();
-        } catch (SQLException ex) {
-            Logger.getLogger(GradeDBContext.class.getName()).log(Level.SEVERE, null, ex);
-            try {
-                connection.rollback();
-            } catch (SQLException ex1) {
-                Logger.getLogger(GradeDBContext.class.getName()).log(Level.SEVERE, null, ex1);
-            }
+            ps.executeBatch();
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        finally
-        {
-            try {
-                connection.setAutoCommit(true);
-                stm_remove.close();
-                for (PreparedStatement stm_insert : stm_inserts) {
-                    stm_insert.close();
-                }
-                connection.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(GradeDBContext.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    }
+
+    // Method to get a database connection
+    public Connection getConnection() {
+        // Implement connection logic, e.g., using DriverManager
+        Connection conn = null;
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            String url = "jdbc:sqlserver://localhost;databaseName=yourDB;user=yourUser;password=yourPassword";
+            conn = java.sql.DriverManager.getConnection(url);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        
+        return conn;
     }
-
-    @Override
-    public void insert(Grade model) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void update(Grade model) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void delete(Grade model) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Grade get(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public ArrayList<Grade> list() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
 }

@@ -3,17 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment_PRJ301_HE176112/src/java/controller/exam/TakeExamController.java</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment_PRJ301_HE176112/src/java/controller/auth/BaseRequiredLecturerAuthenticationController.java</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment_PRJ301_HE176112/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment_PRJ301_HE176112/src/java/controller/exam/ViewCourseByLecturerController.java</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment_PRJ301_HE176112/web/index.html</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment_PRJ301_HE176112/web/view/auth/logout.jsp</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment_PRJ301_HE176112/src/java/controller/auth/ControllerLogin.java</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment_PRJ301_HE176112/web/view/exam/take.jsp</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment_PRJ301_HE176112/web/view/auth/login.jsp</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment_PRJ301_HE176112/src/java/controller/exam/NewServlet.java</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment_PRJ301_HE176112/web/view/exam/lecturer.jsp</file>
+            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/dal/GradeDBContext.java</file>
+            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/controller/exam/TakeExamController.java</file>
+            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/controller/auth/ControllerLogin.java</file>
+            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/web/view/exam/grades.jsp</file>
+            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/controller/student/ViewGradesController.java</file>
+            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/controller/auth/RequiredLecturerCheckingFilter.java</file>
+            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/controller/exam/NewServlet.java</file>
+            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/controller/auth/BaseRequiredStudentAuthenticationController.java</file>
+            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/web/WEB-INF/web.xml</file>
         </group>
     </open-files>
 </project-private>
