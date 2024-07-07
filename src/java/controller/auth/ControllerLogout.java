@@ -20,7 +20,7 @@ public class ControllerLogout extends HttpServlet {
             session.invalidate();
         }
 
-        response.sendRedirect("view/auth/login.jsp");
+        response.sendRedirect("login");
     }
 
     @Override

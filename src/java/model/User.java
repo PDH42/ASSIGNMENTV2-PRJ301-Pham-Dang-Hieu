@@ -9,11 +9,20 @@ package model;
  * @author sonnt-local
  */
 public class User {
-    private String username;
+   private String username;
     private String password;
     private String displayname;
+    private String role;
     private Lecturer lecturer;
     private Student student;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public String getUsername() {
         return username;
@@ -39,6 +48,8 @@ public class User {
         this.displayname = displayname;
     }
 
+    
+
     public Lecturer getLecturer() {
         return lecturer;
     }
@@ -54,5 +65,8 @@ public class User {
     public void setStudent(Student student) {
         this.student = student;
     }
+    
+
+    
     
 }

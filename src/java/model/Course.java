@@ -17,6 +17,15 @@ public class Course {
     private Subject subject;
     private Semester semester;
     private ArrayList<Student> students = new ArrayList<>();
+    private ArrayList<Grade> grades = new ArrayList<>();
+
+    public ArrayList<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(ArrayList<Grade> grades) {
+        this.grades = grades;
+    }
 
     public int getId() {
         return id;

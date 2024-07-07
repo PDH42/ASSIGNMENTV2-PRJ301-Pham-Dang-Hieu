@@ -26,18 +26,14 @@ public class ControllerLogin extends HttpServlet {
         User user = db.getUserByUsernamePassword(username, password);
         if (user != null) {
             request.getSession().setAttribute("user", user);
-            if (user.getLecturer() != null) {
-                response.sendRedirect("exam/lecturer");
-            } else if (user.getStudent() != null) {
-                response.sendRedirect("student/grades");
-            } else {
-                response.getWriter().println("Unknown user role!");
-            }
+            request.setAttribute("message", "Login successful: " + user.getDisplayname());
+            request.setAttribute("messageType", "success");
         } else {
             request.setAttribute("message", "Login failed! Please try again.");
             request.setAttribute("messageType", "error");
-            request.getRequestDispatcher("view/auth/login.jsp").forward(request, response);
         }
+
+        request.getRequestDispatcher("view/auth/login.jsp").forward(request, response);
     }
 
     @Override
