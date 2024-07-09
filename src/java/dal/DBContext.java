@@ -12,14 +12,14 @@ import java.util.logging.Logger;
  *
  * @author sonnt
  */
-public abstract class DBContext<T> {
+public abstract class DBContext<A> {
     protected Connection connection;
     public DBContext()
     {
         try {
             String user = "sa";
             String pass = "12345";
-            String url = "jdbc:sqlserver://DESKTOP-PN05MCD\\SQLEXPRESS:1433;databaseName=Assignment_SU24V3;encript=true;trustservercertificate=true;";
+            String url = "jdbc:sqlserver://DESKTOP-PN05MCD\\SQLEXPRESS:1433;databaseName=Final_Project;encript=true;trustservercertificate=true;";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, user, pass);
         } catch (ClassNotFoundException ex) {
@@ -29,10 +29,10 @@ public abstract class DBContext<T> {
         }
     }
     
-    public abstract void insert(T model);
-    public abstract void update(T model);
-    public abstract void delete(T model);
-    public abstract T get(int id);
-    public abstract ArrayList<T> list();
+    public abstract void insert(A model);
+    public abstract void update(A model);
+    public abstract void delete(A model);
+    public abstract A get(int id);
+    public abstract ArrayList<A> list();
     
 }

@@ -4,39 +4,101 @@
  */
 package model;
 
-import java.util.ArrayList;
 
 /**
  *
- * @author X1 Nano
+ * @author Acer
  */
 public class Student {
-    private int id;
-    private String name;
-    private ArrayList<Course> courses = new ArrayList<>();
+    private String studentID;
+    private String fullName;
+    private String gender;
+    private String dob;
+    private int phone;
+    private String email;
+    private String address;
+    private StudentClass studentClass;
 
-    public int getId() {
-        return id;
+    public Student() {
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Student(String studentID, String fullName, String gender, String dob, int phone, String email, String address, StudentClass studentClass) {
+        this.studentID = studentID;
+        this.fullName = fullName;
+        this.gender = gender;
+        this.dob = dob;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.studentClass = studentClass;
     }
 
-    public String getName() {
-        return name;
+    public String getStudentID() {
+        return studentID;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
     }
 
-    public ArrayList<Course> getCourses() {
-        return courses;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setCourses(ArrayList<Course> courses) {
-        this.courses = courses;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public StudentClass getStudentClass() {
+        return studentClass;
+    }
+
+    public void setStudentClass(StudentClass studentClass) {
+        this.studentClass = studentClass;
+    }
+
+  
+
     
+  
 }

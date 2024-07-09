@@ -4,75 +4,37 @@
  */
 package model;
 
-import java.util.ArrayList;
-
 /**
  *
- * @author X1 Nano
+ * @author Acer
  */
 public class Course {
-    private int id;
-    private String name;
-    private Lecturer lecturer;
-    private Subject subject;
-    private Semester semester;
-    private ArrayList<Student> students = new ArrayList<>();
-    private ArrayList<Grade> grades = new ArrayList<>();
+    private String courseID;
+    private String courseName;
 
-    public ArrayList<Grade> getGrades() {
-        return grades;
+    public Course() {
     }
 
-    public void setGrades(ArrayList<Grade> grades) {
-        this.grades = grades;
+    public Course(String courseID, String courseName) {
+        this.courseID = courseID;
+        this.courseName = courseName;
     }
 
-    public int getId() {
-        return id;
+    public String getCourseID() {
+        return courseID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCourseID(String courseID) {
+        this.courseID = courseID;
     }
 
-    public String getName() {
-        return name;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
-
-    public Lecturer getLecturer() {
-        return lecturer;
-    }
-
-    public void setLecturer(Lecturer lecturer) {
-        this.lecturer = lecturer;
-    }
-
-    public Subject getSubject() {
-        return subject;
-    }
-
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
-
-    public Semester getSemester() {
-        return semester;
-    }
-
-    public void setSemester(Semester semester) {
-        this.semester = semester;
-    }
-
-    public ArrayList<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(ArrayList<Student> students) {
-        this.students = students;
-    }
+    
     
 }
