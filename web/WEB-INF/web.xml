@@ -6,7 +6,23 @@
     </servlet>
     <servlet>
         <servlet-name>IndexServlet</servlet-name>
-        <servlet-class>controller.IndexServlet</servlet-class>
+        <servlet-class>controller.LecturerView</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MarkServlet</servlet-name>
+        <servlet-class>controller.MarkServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>controller.StudentView</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteServlet</servlet-name>
+        <servlet-class>controller.DeleteServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserMServlet</servlet-name>
+        <servlet-class>controller2.UserMServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AuthServlet</servlet-name>
@@ -16,4 +32,20 @@
         <servlet-name>IndexServlet</servlet-name>
         <url-pattern>/admin</url-pattern>
     </servlet-mapping>
-    
+    <servlet-mapping>
+        <servlet-name>MarkServlet</servlet-name>
+        <url-pattern>/admin/mark</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/user</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteServlet</servlet-name>
+        <url-pattern>/admin/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserMServlet</servlet-name>
+        <url-pattern>/user/mark</url-pattern>
+    </servlet-mapping>
+</web-app>

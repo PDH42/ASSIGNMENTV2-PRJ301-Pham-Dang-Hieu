@@ -1,9 +1,7 @@
 package controller;
-
 import dal.AccountDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,7 +39,7 @@ public class AuthServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("userInfor", account);
                 //Chuyển hướng đến trang index admin
-                if ((account.getRole().getRoleName()).equals("Admin")) {
+                if ((account.getRole().getRoleName()).equals("Lecturer")) {
                     response.sendRedirect(request.getContextPath() + "/admin");
                 } else {
                     response.sendRedirect(request.getContextPath() + "/user");
