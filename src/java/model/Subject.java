@@ -10,10 +10,11 @@ import java.util.ArrayList;
  *
  * @author X1 Nano
  */
-public class Student {
+public class Subject {
     private int id;
     private String name;
     private ArrayList<Course> courses = new ArrayList<>();
+    private ArrayList<Assessment> assessments = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -38,5 +39,13 @@ public class Student {
     public void setCourses(ArrayList<Course> courses) {
         this.courses = courses;
     }
+
+    public ArrayList<Assessment> getAssessments() {
+        return assessments;
+    }
+
+    public void setAssessments(ArrayList<Assessment> assessments) {
+        this.assessments = assessments;
+    }
     
-}
+} 

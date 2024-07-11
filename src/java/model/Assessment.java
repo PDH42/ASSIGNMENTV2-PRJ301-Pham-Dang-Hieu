@@ -4,19 +4,15 @@
  */
 package model;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author X1 Nano
  */
-public class Course {
+public class Assessment {
     private int id;
     private String name;
-    private Lecturer lecturer;
+    private float weight;
     private Subject subject;
-    private Semester semester;
-    private ArrayList<Student> students = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -34,12 +30,12 @@ public class Course {
         this.name = name;
     }
 
-    public Lecturer getLecturer() {
-        return lecturer;
+    public float getWeight() {
+        return weight;
     }
 
-    public void setLecturer(Lecturer lecturer) {
-        this.lecturer = lecturer;
+    public void setWeight(float weight) {
+        this.weight = weight;
     }
 
     public Subject getSubject() {
@@ -48,22 +44,6 @@ public class Course {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
-    }
-
-    public Semester getSemester() {
-        return semester;
-    }
-
-    public void setSemester(Semester semester) {
-        this.semester = semester;
-    }
-
-    public ArrayList<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(ArrayList<Student> students) {
-        this.students = students;
     }
     
 }

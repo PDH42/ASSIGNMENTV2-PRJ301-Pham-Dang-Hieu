@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author X1 Nano
  */
-public class Student {
+public class Lecturer {
     private int id;
     private String name;
     private ArrayList<Course> courses = new ArrayList<>();
