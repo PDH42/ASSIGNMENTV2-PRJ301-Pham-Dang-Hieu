@@ -1,17 +1,17 @@
 <%-- 
-    Document   : take
-    Created on : Jun 24, 2024, 2:01:09 PM
-    Author     : sonnt-local
+    Document   : coursesAndFailedStudents
+    Created on : Jun 19, 2024
+    Author     : X1 Nano
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Course Pass Rate</title>
+        <title>Courses and Failed Students</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -54,39 +54,57 @@
                 border-radius: 10px;
                 box-shadow: 0 0 10px rgba(0,0,0,0.1);
                 width: 100%;
-                max-width: 1000px;
+                max-width: 800px;
                 box-sizing: border-box;
                 text-align: center;
             }
-            table {
-                width: 100%;
-                border-collapse: collapse;
+            h2 {
+                color: #333;
+                text-align: center;
                 margin-bottom: 20px;
             }
-            th, td {
+            form {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+            label {
+                margin-bottom: 5px;
+                font-weight: bold;
+                font-size: 18px;
+            }
+            select, input[type="submit"] {
                 padding: 10px;
-                border: 1px solid #ccc;
-                text-align: left;
-            }
-            th {
-                background-color: #f4f4f4;
-            }
-            input[type="text"] {
+                margin: 10px 0;
                 width: 100%;
-                padding: 5px;
+                max-width: 300px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
                 box-sizing: border-box;
+                font-size: 16px;
             }
             input[type="submit"] {
                 background-color: green;
                 color: white;
                 border: none;
-                padding: 10px 20px;
                 cursor: pointer;
-                font-size: 16px;
-                border-radius: 5px;
             }
             input[type="submit"]:hover {
                 background-color: darkgreen;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+            th, td {
+                padding: 10px;
+                text-align: left;
+                border: 1px solid #ccc;
+            }
+            th {
+                background-color: #f9f9f9;
             }
         </style>
     </head>
@@ -100,39 +118,41 @@
             </div>
         </c:if>
         <div class="container">
-            <form action="take" method="POST">
+            <c:if test="${requestScope.failedStudents eq null}">
+                <c:if test="${requestScope.courses.size() > 0}">
+                    <form action="pass" method="POST">
+                        <label for="course-select">Select a course:</label>
+                        <select name="cid" id="course-select">
+                            <c:forEach items="${requestScope.courses}" var="c">
+                                <option value="${c.id}">
+                                    ${c.name}
+                                </option>
+                            </c:forEach>
+                        </select>
+                        <input type="submit" value="View Failed Students"/>
+                    </form>
+                </c:if>
+            </c:if>
+
+            <c:if test="${requestScope.failedStudents ne null}">
+                <h2>Students Who Did Not Pass</h2>
                 <table>
                     <thead>
                         <tr>
+                            <th>Student ID</th>
                             <th>Student Name</th>
-                            <c:forEach items="${requestScope.exams}" var="e">
-                                <th>${e.assessment.name} (${e.assessment.weight})<br/>${e.from}</th>
-                            </c:forEach>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${requestScope.students}" var="s">
+                        <c:forEach var="student" items="${requestScope.failedStudents}">
                             <tr>
-                                <td>${s.name}</td>
-                                <c:forEach items="${requestScope.exams}" var="e">
-                                    <td>
-                                        <input type="text" name="score${s.id}_${e.id}"
-                                               <c:forEach items="${requestScope.grades}" var="g">
-                                                   <c:if test="${e.id eq g.exam.id and s.id eq g.student.id}">
-                                                       value="${g.score}"
-                                                   </c:if>
-                                               </c:forEach>
-                                               />
-                                        <input type="hidden" name="gradeid" value="${s.id}_${e.id}"/>
-                                    </td>
-                                </c:forEach>
+                                <td>${student.id}</td>
+                                <td>${student.name}</td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
-                <input type="hidden" name="cid" value="${param.cid}" />
-                <input type="submit" value="Save"/>
-            </form>
+            </c:if>
         </div>
     </body>
 </html>

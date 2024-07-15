@@ -17,8 +17,24 @@
         <servlet-class>controller.exam.ViewCourseStudent</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ViewCoursePassRate</servlet-name>
-        <servlet-class>controller.exam.ViewCoursePassRate</servlet-class>
+        <servlet-name>ViewPassServlet</servlet-name>
+        <servlet-class>controller.exam.ViewPassServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LecturerDashboardController</servlet-name>
+        <servlet-class>dashboard.LecturerDashboardController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StudentDashboardController</servlet-name>
+        <servlet-class>dashboard.StudentDashboardController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InformatinLecturer</servlet-name>
+        <servlet-class>controller.auth.InformatinLecturer</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InformationStudent</servlet-name>
+        <servlet-class>controller.auth.InformationStudent</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ViewCourseByLecturerController</servlet-name>
@@ -36,10 +52,6 @@
         <servlet-name>ViewCourseStudent</servlet-name>
         <url-pattern>/student/course</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ViewCoursePassRate</servlet-name>
-        <url-pattern>/view/pass</url-pattern>
-    </servlet-mapping>
     <servlet>
         <servlet-name>LogoutController</servlet-name>
         <servlet-class>controller.auth.LogoutController</servlet-class>
@@ -47,5 +59,25 @@
     <servlet-mapping>
         <servlet-name>LogoutController</servlet-name>
         <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewPassServlet</servlet-name>
+        <url-pattern>/view/pass</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LecturerDashboardController</servlet-name>
+        <url-pattern>/lecturer/dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StudentDashboardController</servlet-name>
+        <url-pattern>/student/dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InformatinLecturer</servlet-name>
+        <url-pattern>/view/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InformationStudent</servlet-name>
+        <url-pattern>/student/info</url-pattern>
     </servlet-mapping>
 </web-app>

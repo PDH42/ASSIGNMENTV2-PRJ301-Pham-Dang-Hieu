@@ -27,11 +27,11 @@ public class LoginController extends HttpServlet {
         if (user != null) {
             request.getSession().setAttribute("user", user);
             if (user.getLecturer() != null) {
-                response.sendRedirect("exam/lecturer");
+                response.sendRedirect("lecturer/dashboard");
             } else if (user.getStudent() != null) {
-                response.sendRedirect("student/course");
+                response.sendRedirect("student/dashboard");
             } else {
-                response.sendRedirect("login"); // Default redirect in case of an unknown role
+                response.sendRedirect("login");
             }
         } else {
             request.setAttribute("errorMessage", "Login Failed !!!");
