@@ -22,8 +22,8 @@
         </div>
     </c:if>
     <div class="container">
-        <h2>Profile Lecturer</h2>
-        <img src="../img/sonnt.jpg" alt="Profile Picture" class="profile-picture"/>
+        <h2>Profile Student</h2>
+        <img src="../img/hieu.jpg" alt="Profile Picture" class="profile-picture"/>
         <div class="profile-info">
             <p><strong>Username:</strong> ${user.username}</p>
             <p><strong>Display Name:</strong> ${user.displayname}</p>

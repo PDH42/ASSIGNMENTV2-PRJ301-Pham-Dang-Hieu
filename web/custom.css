@@ -1,0 +1,47 @@
+body {
+    background: darkorange; /* Changed background color to darkorange */
+    background-size: cover;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    margin-bottom: 20px;
+}
+
+.list-group-item {
+    border: none;
+    padding: 20px 0;
+}
+
+.btn-success {
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    width: 200px; /* Set a fixed width for the buttons */
+    margin: 0 auto; /* Center align the buttons */
+    display: block; /* Ensure buttons are block elements */
+}
+
+.btn-success:hover {
+    background-color: darkgreen;
+    border-color: darkgreen;
+}
+
+.ml-auto.d-flex .btn-outline-info {
+    margin-right: 10px; /* Adds some space between the profile button and logout button */
+}
+
+.list-group {
+    display: flex; /* Use Flexbox for alignment */
+    flex-direction: column; /* Align items in a column */
+    align-items: center; /* Center align items horizontally */
+}

@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: darkorange;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.header-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.logout, .home {
+    margin: 0 10px;
+}
+
+.container {
+    background-color: white;
+    padding: 40px;
+    margin: 100px 20px 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 800px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+.profile-info p {
+    margin: 5px 0;
+    line-height: 1.5;
+}
+
+.profile-info strong {
+    display: inline-block;
+    width: 150px;
+}
+
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+input[type="submit"], .home-button {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+input[type="submit"]:hover, .home-button:hover {
+    background-color: darkgreen;
+}

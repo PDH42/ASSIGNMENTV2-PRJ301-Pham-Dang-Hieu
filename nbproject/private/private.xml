@@ -3,30 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/dal/UserDBContext.java</file>
+            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/web/view/auth/userProfile_1.jsp</file>
             <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/web/view/exam/take.jsp</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/controller/auth/InformationStudent.java</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/controller/auth/BaseRequiredLecturerAuthenticationController.java</file>
             <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/web/view/menu/lecturerDashboard.jsp</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/model/User.java</file>
+            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/web/custom.css</file>
             <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/web/view/auth/login.jsp</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/dashboard/LecturerDashboardController.java</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/web/view/exam/lecturer.jsp</file>
+            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/web/rate.css</file>
             <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/web/view/auth/userProfile.jsp</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/controller/auth/BaseRequiredStudentAuthenticationController.java</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/dal/DBContext.java</file>
+            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/web/view/exam/lecturer.jsp</file>
+            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/web/student.css</file>
             <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/web/view/menu/studentDashboard.jsp</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/controller/auth/LoginController.java</file>
             <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/web/view/exam/student.jsp</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/controller/exam/TakeExamController.java</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/controller/auth/LogoutController.java</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/dashboard/StudentDashboardController.java</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/controller/auth/InformatinLecturer.java</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/controller/exam/ViewCourseStudent.java</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/web/viewstudent.css</file>
+            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/web/take.css</file>
+            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/web/lecturer.css</file>
             <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/web/view/exam/coursesAndFailedStudents.jsp</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/controller/exam/ViewCourseByLecturerController.java</file>
-            <file>file:/C:/Users/ADMIN/Desktop/Summer24/PRJ/Assignment-HE176112-master/src/java/controller/exam/ViewPassServlet.java</file>
         </group>
     </open-files>
 </project-private>

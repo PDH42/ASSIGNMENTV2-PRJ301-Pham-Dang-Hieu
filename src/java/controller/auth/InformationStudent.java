@@ -21,7 +21,7 @@ public class InformationStudent extends BaseRequiredStudentAuthenticationControl
 
         if (retrievedUser != null) {
             request.setAttribute("user", retrievedUser);
-            request.getRequestDispatcher("/view/auth/userProfile.jsp").forward(request, response); // Ensure this path is correct
+            request.getRequestDispatcher("/view/auth/userProfile_1.jsp").forward(request, response); // Ensure this path is correct
         } else {
             response.getWriter().println("User not found");
         }

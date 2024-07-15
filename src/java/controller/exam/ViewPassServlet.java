@@ -4,11 +4,10 @@ import dal.CourseDBContext;
 import dal.GradeDBContext;
 import model.Course;
 import model.Lecturer;
-import model.Student;
+import model.StudentResult;
 import model.User;
 import controller.auth.BaseRequiredLecturerAuthenticationController;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -24,28 +23,24 @@ public class ViewPassServlet extends BaseRequiredLecturerAuthenticationControlle
         ArrayList<Course> courses = courseDB.getCoursesByLecturer(lecturer.getId());
         request.setAttribute("courses", courses);
 
-        // Forward to JSP for course selection and displaying failed students
+        // Forward to JSP for course selection
         request.getRequestDispatcher("/view/exam/coursesAndFailedStudents.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response, User user, Lecturer lecturer)
             throws ServletException, IOException {
-        int cid = Integer.parseInt(request.getParameter("cid"));
+        int courseId = Integer.parseInt(request.getParameter("cid"));
 
-        // Fetch failed students
-        int lid = lecturer.getId();
-        GradeDBContext gradeDB = new GradeDBContext();
-        ArrayList<Student> failedStudents = gradeDB.getFailedStudentsByCourseAndLecturer(cid, lid);
+        GradeDBContext dao = new GradeDBContext();
+        ArrayList<StudentResult> results = dao.getStudentResults(lecturer.getId(), courseId);
 
-        // Fetch all courses taught by this lecturer
+        // Fetch all courses again to allow re-selection
         CourseDBContext courseDB = new CourseDBContext();
         ArrayList<Course> courses = courseDB.getCoursesByLecturer(lecturer.getId());
 
-        // Set attributes and forward to JSP for display
         request.setAttribute("courses", courses);
-        request.setAttribute("failedStudents", failedStudents);
-        request.setAttribute("selectedCourseId", cid);
+        request.setAttribute("results", results);
         request.getRequestDispatcher("/view/exam/coursesAndFailedStudents.jsp").forward(request, response);
     }
 }

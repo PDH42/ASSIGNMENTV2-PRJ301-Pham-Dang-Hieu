@@ -10,6 +10,7 @@ import model.Assessment;
 import model.Exam;
 import model.Grade;
 import model.Student;
+import model.StudentResult;
 
 public class GradeDBContext extends DBContext<Grade> {
 
@@ -223,39 +224,76 @@ public class GradeDBContext extends DBContext<Grade> {
         return false;
     }
 
-    public ArrayList<Student> getFailedStudentsByCourseAndLecturer(int cid, int lid) {
-        ArrayList<Student> failedStudents = new ArrayList<>();
+    public ArrayList<StudentResult> getStudentResults(int lecturerId, int courseId) {
+        ArrayList<StudentResult> results = new ArrayList<>();
         try {
-            String sql = "SELECT s.sid, s.sname \n" +
-"                       FROM students s \n" +
-"                       JOIN grades g ON s.sid = g.sid \n" +
-"                       JOIN exams e ON g.eid = e.eid \n" +
-"                       JOIN assesments a ON e.aid = a.aid \n" +
-"                       JOIN courses c ON a.subid = c.subid \n" +
-"                       WHERE c.cid = ? AND c.lid = ?\n" +
-"                       GROUP BY s.sid, s.sname \n" +
-"                       HAVING SUM(CASE WHEN a.aname = 'practical' THEN g.score ELSE 0 END) <= 0 \n" +
-"                       OR SUM(CASE WHEN a.aname = 'final' THEN g.score ELSE 0 END) < 4 \n" +
-"                       OR SUM(g.score) < 5";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, cid);
-            stm.setInt(2, lid);
-            ResultSet rs = stm.executeQuery();
+            String sql = "SELECT \n"
+                    + "    s.sid, \n"
+                    + "    s.sname, \n"
+                    + "    sem.year, \n"
+                    + "    sem.season AS semester, \n"
+                    + "    sub.subname AS subject_name, \n"
+                    + "    SUM(g.score * a.weight) AS total_weighted_score, \n"
+                    + "    CASE \n"
+                    + "        WHEN SUM(g.score * a.weight) >= 5 \n"
+                    + "             AND MAX(CASE WHEN a.aname = 'Practical Exam' THEN g.score ELSE 0 END) > 0 \n"
+                    + "             AND MAX(CASE WHEN a.aname = 'Final Exam' THEN g.score ELSE 0 END) >= 4 \n"
+                    + "        THEN 'Passed' \n"
+                    + "        ELSE 'Failed' \n"
+                    + "    END AS status \n"
+                    + "FROM \n"
+                    + "    dbo.students AS s \n"
+                    + "INNER JOIN \n"
+                    + "    dbo.grades AS g ON s.sid = g.sid \n"
+                    + "INNER JOIN \n"
+                    + "    dbo.exams AS e ON g.eid = e.eid \n"
+                    + "INNER JOIN \n"
+                    + "    dbo.assesments AS a ON e.aid = a.aid \n"
+                    + "INNER JOIN \n"
+                    + "    dbo.courses AS c ON a.subid = c.subid \n"
+                    + "INNER JOIN \n"
+                    + "    dbo.lecturers AS l ON c.lid = l.lid \n"
+                    + "INNER JOIN \n"
+                    + "    dbo.semester AS sem ON c.semid = sem.semid \n"
+                    + "INNER JOIN \n"
+                    + "    dbo.subjects AS sub ON c.subid = sub.subid \n"
+                    + "WHERE \n"
+                    + "    l.lid = ?\n"
+                    + "    AND c.cid = ?\n"
+                    + "GROUP BY \n"
+                    + "    s.sid, \n"
+                    + "    s.sname, \n"
+                    + "    sem.year, \n"
+                    + "    sem.season, \n"
+                    + "    sub.subname \n"
+                    + "ORDER BY \n"
+                    + "    s.sid, \n"
+                    + "    sub.subname;";
+
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, lecturerId);
+            stmt.setInt(2, courseId);
+
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                Student student = new Student();
-                student.setId(rs.getInt("sid"));
-                student.setName(rs.getString("sname"));
-                failedStudents.add(student);
+                int sid = rs.getInt("sid");
+                String sname = rs.getString("sname");
+                int year = rs.getInt("year");
+                String semester = rs.getString("semester");
+                String subjectName = rs.getString("subject_name");
+                double totalWeightedScore = rs.getDouble("total_weighted_score");
+                String status = rs.getString("status");
+
+                results.add(new StudentResult(sid, sname, year, semester, subjectName, totalWeightedScore, status));
             }
+
             rs.close();
-            stm.close();
-        } catch (Exception e) {
+            stmt.close();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return failedStudents;
+        return results;
     }
-
-    
 
     @Override
     public void insert(Grade model) {
