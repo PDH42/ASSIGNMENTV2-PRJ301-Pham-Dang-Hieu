@@ -222,58 +222,104 @@ public class GradeDBContext extends DBContext<Grade> {
 
         return false;
     }
-    public float getPassRate(int cid) {
-    String sql = "SELECT COUNT(DISTINCT g.sid) AS totalStudents, "
-               + "SUM(CASE WHEN g.score * a.weight >= 5 THEN 1 ELSE 0 END) AS passedStudents "
-               + "FROM grades g "
-               + "JOIN exams e ON g.eid = e.eid "
-               + "JOIN assesments a ON e.aid = a.aid "
-               + "JOIN courses c ON a.subid = c.subid "
-               + "WHERE c.cid = ?";
 
-    try (PreparedStatement stm = connection.prepareStatement(sql)) {
-        stm.setInt(1, cid);
-        ResultSet rs = stm.executeQuery();
-        if (rs.next()) {
-            int totalStudents = rs.getInt("totalStudents");
-            int passedStudents = rs.getInt("passedStudents");
-            return (float) passedStudents / totalStudents * 100;
+    public ArrayList<Student> getFailedStudentsByCourseAndLecturer(int cid, int lid) {
+        ArrayList<Student> failedStudents = new ArrayList<>();
+        try {
+            String sql = "SELECT \n"
+                    + "    s.sid AS student_id, \n"
+                    + "    s.sname AS student_name\n"
+                    + "FROM \n"
+                    + "    lecturers l\n"
+                    + "JOIN \n"
+                    + "    courses c ON l.lid = c.lid\n"
+                    + "JOIN \n"
+                    + "    subjects subj ON c.subid = subj.subid\n"
+                    + "JOIN \n"
+                    + "    assesments a ON subj.subid = a.subid\n"
+                    + "JOIN \n"
+                    + "    exams e ON a.aid = e.aid\n"
+                    + "JOIN \n"
+                    + "    grades g ON e.eid = g.eid\n"
+                    + "JOIN \n"
+                    + "    students s ON g.sid = s.sid\n"
+                    + "WHERE \n"
+                    + "    l.lid = ? \n"
+                    + "    AND c.cid = ?\n"
+                    + "GROUP BY \n"
+                    + "    s.sid, s.sname\n"
+                    + "HAVING \n"
+                    + "    SUM(CASE WHEN a.aname = 'practical' THEN g.score ELSE 0 END) =< 0\n"
+                    + "    OR SUM(CASE WHEN a.aname = 'final' THEN g.score ELSE 0 END) < 4\n"
+                    + "    OR SUM(g.score) < 5;";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, lid);
+            stm.setInt(2, cid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Student student = new Student();
+                student.setId(rs.getInt("id"));
+                student.setName(rs.getString("name"));
+                failedStudents.add(student);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (SQLException ex) {
-        Logger.getLogger(GradeDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        return failedStudents;
     }
-    return 0;
-}
 
-
-    public ArrayList<Student> getFailedStudents(int cid) {
-    String sql = "SELECT DISTINCT s.sid, s.sname "
-               + "FROM students s "
-               + "JOIN grades g ON s.sid = g.sid "
-               + "JOIN exams e ON g.eid = e.eid "
-               + "JOIN assesments a ON e.aid = a.aid "
-               + "JOIN courses c ON a.subid = c.subid "
-               + "WHERE c.cid = ? "
-               + "GROUP BY s.sid, s.sname "
-               + "HAVING SUM(g.score * a.weight) < 5";
-
-    ArrayList<Student> failedStudents = new ArrayList<>();
-    try (PreparedStatement stm = connection.prepareStatement(sql)) {
-        stm.setInt(1, cid);
-        ResultSet rs = stm.executeQuery();
-        while (rs.next()) {
-            Student student = new Student();
-            student.setId(rs.getInt("sid"));
-            student.setName(rs.getString("sname"));
-            failedStudents.add(student);
+    public float getPassRateByCourseAndLecturer(int cid, int lid) {
+        float passRate = 0;
+        try {
+            String sql = "WITH StudentPassStatus AS (\n"
+                    + "    SELECT \n"
+                    + "        s.sid AS student_id,\n"
+                    + "        SUM(CASE WHEN a.aname = 'practical' THEN g.score ELSE 0 END) AS practical_score,\n"
+                    + "        SUM(CASE WHEN a.aname = 'final' THEN g.score ELSE 0 END) AS final_score,\n"
+                    + "        SUM(g.score) AS total_score\n"
+                    + "    FROM \n"
+                    + "        lecturers l \n"
+                    + "    JOIN \n"
+                    + "        courses c ON l.lid = c.lid \n"
+                    + "    JOIN \n"
+                    + "        subjects subj ON c.subid = subj.subid\n"
+                    + "    JOIN \n"
+                    + "        assesments a ON subj.subid = a.subid\n"
+                    + "    JOIN \n"
+                    + "        exams e ON a.aid = e.aid\n"
+                    + "    JOIN \n"
+                    + "        grades g ON e.eid = g.eid\n"
+                    + "    JOIN \n"
+                    + "        students s ON g.sid = s.sid\n"
+                    + "    WHERE \n"
+                    + "        l.lid = ? \n"
+                    + "        AND c.cid = ?\n"
+                    + "    GROUP BY \n"
+                    + "        s.sid\n"
+                    + ")\n"
+                    + "SELECT \n"
+                    + "    CASE \n"
+                    + "        WHEN COUNT(*) = 0 THEN 0\n"
+                    + "        ELSE COUNT(CASE \n"
+                    + "                    WHEN practical_score > 0 \n"
+                    + "                    AND final_score >= 4 \n"
+                    + "                    AND total_score >= 5 \n"
+                    + "                    THEN 1 ELSE NULL END) * 100.0 / COUNT(*)\n"
+                    + "    END AS passRate\n"
+                    + "FROM \n"
+                    + "    StudentPassStatus;";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, lid);
+            stm.setInt(2, cid);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                passRate = rs.getFloat("passRate");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (SQLException ex) {
-        Logger.getLogger(GradeDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        return passRate;
     }
-    return failedStudents;
-}
-
-    
 
     @Override
     public void insert(Grade model) {

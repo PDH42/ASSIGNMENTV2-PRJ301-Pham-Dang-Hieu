@@ -13,20 +13,27 @@
         <title>JSP Page</title>
     </head>
     <body>
+
+        <c:if test="${sessionScope.user != null}">
+            <h2>Welcome, ${sessionScope.user.displayname} So Cute And HandSome</h2>
+            <form action="${pageContext.request.contextPath}/logout" method="POST">
+                <input type="submit" value="Logout"/>
+            </form>
+        </c:if>
         <c:if test="${requestScope.exams eq null}">
             <c:if test="${requestScope.courses.size() > 0}">
-            <form action="lecturer" method="POST">
-                <input type="hidden" name="lid" value="${param.lid}"/>
-                course: <select name="cid">
-                    <c:forEach items="${requestScope.courses}" var="c">
-                        <option value="${c.id}">
-                            ${c.name}
-                        </option>
-                    </c:forEach>
-                </select>
-                <input type="submit" value="view"/>
-            </form>
-                </c:if>
+                <form action="lecturer" method="POST">
+                    <input type="hidden" name="lid" value="${param.lid}"/>
+                    course: <select name="cid">
+                        <c:forEach items="${requestScope.courses}" var="c">
+                            <option value="${c.id}">
+                                ${c.name}
+                            </option>
+                        </c:forEach>
+                    </select>
+                    <input type="submit" value="view"/>
+                </form>
+            </c:if>
         </c:if>
         <c:if test="${requestScope.exams ne null}">
             <form action="take" method="GET">
@@ -35,9 +42,9 @@
                     <input type="checkbox" name="eid" value="${e.id}" /> 
                     ${e.assessment.name}-(${e.from}:${e.assessment.weight}%) <br/>
                 </c:forEach>
-                    <input type="submit" value="take"/>
+                <input type="submit" value="take"/>
             </form>
-            
+
         </c:if>
     </body>
 </html>

@@ -13,6 +13,12 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <c:if test="${sessionScope.user != null}">
+            <h2>Welcome, ${sessionScope.user.displayname} So Cute And HandSome</h2>
+            <form action="${pageContext.request.contextPath}/logout" method="POST">
+                <input type="submit" value="Logout"/>
+            </form>
+        </c:if>
         <form action="take" method="POST">
             <table border="1px">
                 <tr>

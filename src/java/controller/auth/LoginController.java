@@ -2,7 +2,6 @@ package controller.auth;
 
 import dal.UserDBContext;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,18 +26,21 @@ public class LoginController extends HttpServlet {
         User user = db.getUserByUsernamePassword(username, password);
         if (user != null) {
             request.getSession().setAttribute("user", user);
-            response.getWriter().println("login successful: " + user.getDisplayname());
-
+            if (user.getLecturer() != null) {
+                response.sendRedirect("exam/lecturer");
+            } else if (user.getStudent() != null) {
+                response.sendRedirect("student/course");
+            } else {
+                response.sendRedirect("login"); // Default redirect in case of an unknown role
+            }
         } else {
+            request.setAttribute("errorMessage", "Login Failed !!!");
             request.getRequestDispatcher("view/auth/login.jsp").forward(request, response);
-
         }
-
     }
 
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Login Controller Servlet";
     }
-
 }
