@@ -1,0 +1,59 @@
+/* Custom styles for the Student Dashboard */
+body {
+    font-family: Arial, sans-serif;
+    background-color: darkorange;
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+.navbar {
+    margin-bottom: 20px;
+    background-color: #fff;
+    color: #333;
+}
+
+.navbar-text {
+    font-weight: bold;
+    color: #333;
+}
+
+.navbar .btn {
+    margin-left: 10px;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.list-group-item {
+    border: none;
+    padding: 0;
+}
+
+ul li a {
+    text-decoration: none;
+    color: white;
+    background-color: #28a745; /* Green color */
+    padding: 10px 15px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+ul li a:hover {
+    background-color: #218838; /* Darker green on hover */
+}

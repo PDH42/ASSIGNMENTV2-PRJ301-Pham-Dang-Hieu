@@ -41,17 +41,17 @@ public class ViewCourseStudent extends BaseRequiredStudentAuthenticationControll
             Grade grade = gradeDB.getGradeByExamAndStudent(exam.getId(), sid);
             exam.setGrade(grade);
         }
-        boolean passed = gradeDB.hasStudentPassedCourse(sid, cid);
-        float totalWeightedScore = gradeDB.getTotalWeightedScore(sid, cid);
+
+        GradeDBContext.Result result = gradeDB.getTotalWeightedScoreAndStatus(sid, cid);
 
         request.setAttribute("exams", exams);
-        request.setAttribute("totalWeightedScore", totalWeightedScore);
-        request.setAttribute("passed", passed ? "Pass" : "Not Pass");
+        request.setAttribute("totalWeightedScore", result.getTotalWeightedScore());
+        request.setAttribute("passed", result.getStatus());
         request.getRequestDispatcher("../view/exam/student.jsp").forward(request, response);
     }
 
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Servlet to view courses and exams for students.";
     }
 }

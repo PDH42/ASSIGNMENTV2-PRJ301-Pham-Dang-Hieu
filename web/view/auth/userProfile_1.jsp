@@ -8,7 +8,7 @@
     <title>User Profile</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
-    <link href="../sonnt.css" rel="stylesheet" type="text/css"/>
+    <link href="${pageContext.request.contextPath}/css/sonnt.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
     <c:if test="${sessionScope.user != null}">

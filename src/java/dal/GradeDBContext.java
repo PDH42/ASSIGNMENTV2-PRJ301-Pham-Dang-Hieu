@@ -59,7 +59,8 @@ public class GradeDBContext extends DBContext<Grade> {
     }
 
     public void insertGradesForCourse(int cid, ArrayList<Grade> grades) {
-        String sql_remove = "DELETE grades WHERE sid IN (SELECT sid FROM students_courses WHERE cid = ?)";
+        // Delete only the grades related to the specific course
+        String sql_remove = "DELETE FROM grades WHERE sid IN (SELECT sid FROM students_courses WHERE cid = ?) AND eid IN (SELECT eid FROM exams WHERE aid IN (SELECT aid FROM assesments WHERE subid = (SELECT subid FROM courses WHERE cid = ?)))";
         String sql_insert = "INSERT INTO [grades]\n"
                 + "           ([eid]\n"
                 + "           ,[sid]\n"
@@ -76,6 +77,7 @@ public class GradeDBContext extends DBContext<Grade> {
             connection.setAutoCommit(false);
             stm_remove = connection.prepareStatement(sql_remove);
             stm_remove.setInt(1, cid);
+            stm_remove.setInt(2, cid);
             stm_remove.executeUpdate();
 
             for (Grade grade : grades) {
@@ -106,7 +108,6 @@ public class GradeDBContext extends DBContext<Grade> {
                 Logger.getLogger(GradeDBContext.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
     }
 
     public Grade getGradeByExamAndStudent(int eid, int sid) {
@@ -163,33 +164,14 @@ public class GradeDBContext extends DBContext<Grade> {
         return null;
     }
 
-    public float getTotalWeightedScore(int sid, int cid) {
-        String sql = "SELECT SUM(g.score * a.weight) AS totalWeightedScore "
-                + "FROM grades g "
-                + "JOIN exams e ON g.eid = e.eid "
-                + "JOIN assesments a ON e.aid = a.aid "
-                + "JOIN courses c ON a.subid = c.subid "
-                + "WHERE g.sid = ? AND c.cid = ?";
-
-        try (PreparedStatement stm = connection.prepareStatement(sql)) {
-            stm.setInt(1, sid);
-            stm.setInt(2, cid);
-            ResultSet rs = stm.executeQuery();
-            if (rs.next()) {
-                return rs.getFloat("totalWeightedScore");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(GradeDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return 0;
-    }
-
-    public boolean hasStudentPassedCourse(int sid, int cid) {
+    // Method to get total weighted score and pass status
+    public Result getTotalWeightedScoreAndStatus(int sid, int cid) {
         String sql = "SELECT "
-                + "SUM(CASE WHEN a.aname = 'Final Exam' THEN g.score ELSE 0 END) AS finalExamScore, "
-                + "SUM(CASE WHEN a.aname = 'Practical Exam' THEN g.score ELSE 0 END) AS practicalExamScore, "
                 + "SUM(g.score * a.weight) AS totalWeightedScore, "
-                + "COUNT(CASE WHEN a.aname = 'Practical Exam' THEN 1 END) AS practicalExamCount "
+                + "CASE "
+                + "    WHEN SUM(g.score * a.weight) >= 5 THEN 'Pass' "
+                + "    ELSE 'Not Pass' "
+                + "END AS Status "
                 + "FROM grades g "
                 + "JOIN exams e ON g.eid = e.eid "
                 + "JOIN assesments a ON e.aid = a.aid "
@@ -201,99 +183,100 @@ public class GradeDBContext extends DBContext<Grade> {
             stm.setInt(2, cid);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                float finalExamScore = rs.getFloat("finalExamScore");
-                float practicalExamScore = rs.getFloat("practicalExamScore");
                 float totalWeightedScore = rs.getFloat("totalWeightedScore");
-                int practicalExamCount = rs.getInt("practicalExamCount");
-
-                boolean hasPassedFinalExam = finalExamScore >= 4;
-                boolean hasPassedTotalWeighted = totalWeightedScore >= 5;
-                System.out.println("Total Weighted Score: " + totalWeightedScore);
-
-                if (practicalExamCount == 0) {
-                    return hasPassedFinalExam && hasPassedTotalWeighted;
-                } else {
-                    boolean hasPassedPracticalExam = practicalExamScore > 0;
-                    return hasPassedFinalExam && hasPassedTotalWeighted && hasPassedPracticalExam;
-                }
+                String status = rs.getString("Status");
+                return new Result(totalWeightedScore, status);
             }
         } catch (SQLException ex) {
             Logger.getLogger(GradeDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return false;
+        return new Result(0, "Not Pass");
     }
+
+    // Inner class to hold the result
+    public static class Result {
+        private float totalWeightedScore;
+        private String status;
+
+        public Result(float totalWeightedScore, String status) {
+            this.totalWeightedScore = totalWeightedScore;
+            this.status = status;
+        }
+
+        public float getTotalWeightedScore() {
+            return totalWeightedScore;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+    }
+
 
     public ArrayList<StudentResult> getStudentResults(int lecturerId, int courseId) {
-        ArrayList<StudentResult> results = new ArrayList<>();
-        try {
-            String sql = "SELECT \n"
-                    + "    s.sid, \n"
-                    + "    s.sname, \n"
-                    + "    sem.year, \n"
-                    + "    sem.season AS semester, \n"
-                    + "    sub.subname AS subject_name, \n"
-                    + "    SUM(g.score * a.weight) AS total_weighted_score, \n"
-                    + "    CASE \n"
-                    + "        WHEN SUM(g.score * a.weight) >= 5 \n"
-                    + "             AND MAX(CASE WHEN a.aname = 'Practical Exam' THEN g.score ELSE 0 END) > 0 \n"
-                    + "             AND MAX(CASE WHEN a.aname = 'Final Exam' THEN g.score ELSE 0 END) >= 4 \n"
-                    + "        THEN 'Passed' \n"
-                    + "        ELSE 'Failed' \n"
-                    + "    END AS status \n"
-                    + "FROM \n"
-                    + "    dbo.students AS s \n"
-                    + "INNER JOIN \n"
-                    + "    dbo.grades AS g ON s.sid = g.sid \n"
-                    + "INNER JOIN \n"
-                    + "    dbo.exams AS e ON g.eid = e.eid \n"
-                    + "INNER JOIN \n"
-                    + "    dbo.assesments AS a ON e.aid = a.aid \n"
-                    + "INNER JOIN \n"
-                    + "    dbo.courses AS c ON a.subid = c.subid \n"
-                    + "INNER JOIN \n"
-                    + "    dbo.lecturers AS l ON c.lid = l.lid \n"
-                    + "INNER JOIN \n"
-                    + "    dbo.semester AS sem ON c.semid = sem.semid \n"
-                    + "INNER JOIN \n"
-                    + "    dbo.subjects AS sub ON c.subid = sub.subid \n"
-                    + "WHERE \n"
-                    + "    l.lid = ?\n"
-                    + "    AND c.cid = ?\n"
-                    + "GROUP BY \n"
-                    + "    s.sid, \n"
-                    + "    s.sname, \n"
-                    + "    sem.year, \n"
-                    + "    sem.season, \n"
-                    + "    sub.subname \n"
-                    + "ORDER BY \n"
-                    + "    s.sid, \n"
-                    + "    sub.subname;";
+    ArrayList<StudentResult> results = new ArrayList<>();
+    try {
+        String sql = "SELECT \n" +
+                "    s.sid,\n" +
+                "    s.sname,\n" +
+                "    se.year,\n" +
+                "    se.season AS semester,\n" +
+                "    sub.subname AS subject_name,\n" +
+                "    ROUND(SUM(g.score * a.weight), 2) AS total_score,\n" +
+                "    CASE \n" +
+                "        WHEN ROUND(SUM(g.score * a.weight), 2) > 5 THEN 'Pass'\n" +
+                "        ELSE 'Fail'\n" +
+                "    END AS status\n" +
+                "FROM \n" +
+                "    students s\n" +
+                "JOIN \n" +
+                "    students_courses sc ON s.sid = sc.sid\n" +
+                "JOIN \n" +
+                "    courses c ON sc.cid = c.cid\n" +
+                "JOIN \n" +
+                "    subjects sub ON c.subid = sub.subid\n" +
+                "JOIN \n" +
+                "    semester se ON c.semid = se.semid\n" +
+                "JOIN \n" +
+                "    assesments a ON c.subid = a.subid\n" +
+                "JOIN \n" +
+                "    exams e ON a.aid = e.aid\n" +
+                "JOIN \n" +
+                "    grades g ON e.eid = g.eid AND g.sid = s.sid\n" +
+                "WHERE \n" +
+                "    c.lid = ?\n" +
+                "    AND c.cid = ?\n" +
+                "GROUP BY \n" +
+                "    s.sid, s.sname, se.year, se.season, sub.subname\n" +
+                "ORDER BY \n" +
+                "    total_score DESC;";
 
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, lecturerId);
-            stmt.setInt(2, courseId);
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setInt(1, lecturerId);
+        stmt.setInt(2, courseId);
 
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                int sid = rs.getInt("sid");
-                String sname = rs.getString("sname");
-                int year = rs.getInt("year");
-                String semester = rs.getString("semester");
-                String subjectName = rs.getString("subject_name");
-                double totalWeightedScore = rs.getDouble("total_weighted_score");
-                String status = rs.getString("status");
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            int sid = rs.getInt("sid");
+            String sname = rs.getString("sname");
+            int year = rs.getInt("year");
+            String semester = rs.getString("semester");
+            String subjectName = rs.getString("subject_name");
+            double totalScore = rs.getDouble("total_score");
+            String status = rs.getString("status");
 
-                results.add(new StudentResult(sid, sname, year, semester, subjectName, totalWeightedScore, status));
-            }
-
-            rs.close();
-            stmt.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            results.add(new StudentResult(sid, sname, year, semester, subjectName, totalScore, status));
         }
-        return results;
+
+        rs.close();
+        stmt.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return results;
+}
+
 
     @Override
     public void insert(Grade model) {

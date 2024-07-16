@@ -75,7 +75,6 @@ public class TakeExamController extends BaseRequiredLecturerAuthenticationContro
                 grades.add(g);
             }
         }
-
         GradeDBContext db = new GradeDBContext();
         db.insertGradesForCourse(cid, grades);
         String url_param = "";

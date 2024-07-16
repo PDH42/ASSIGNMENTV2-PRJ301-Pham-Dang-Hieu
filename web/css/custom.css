@@ -1,0 +1,142 @@
+body {
+    background: darkorange;
+    background-size: cover;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.card-title {
+    margin-bottom: 20px;
+}
+
+.list-group-item {
+    border: none;
+    padding: 20px 0;
+}
+
+.btn-success {
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    width: 200px;
+    margin: 10px auto;
+    display: block;
+    text-align: center;
+}
+
+.btn-success:hover {
+    background-color: darkgreen;
+    border-color: darkgreen;
+}
+
+.ml-auto.d-flex .btn-outline-info {
+    margin-right: 10px;
+}
+
+.list-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.welcome {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.header-buttons {
+    display: flex;
+}
+
+.home, .logout {
+    margin: 0 10px;
+}
+
+.home-button, .logout-button {
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.home-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.logout-button {
+    background-color: #f44336;
+    color: white;
+}
+
+.container {
+    padding: 20px;
+}
+
+.centered-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+label {
+    font-weight: bold;
+}
+
+select {
+    padding: 10px;
+    border-radius: 5px;
+    width: 150px;
+}
+
+.view-course-button {
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
