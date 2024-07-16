@@ -27,7 +27,6 @@ body {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    color: #333;
 }
 
 h2 {
@@ -35,25 +34,39 @@ h2 {
     margin-bottom: 20px;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
+.list-group {
+    padding-left: 0;
 }
 
 .list-group-item {
-    border: none;
+    list-style: none;
     padding: 0;
+    margin: 5px 0;
+    background-color: transparent; /* Remove default background */
+    border: none; /* Remove default border */
 }
 
-ul li a {
+.list-group-item a {
     text-decoration: none;
     color: white;
     background-color: #28a745; /* Green color */
-    padding: 10px 15px;
+    padding: 10px 20px;
     border-radius: 5px;
     display: inline-block;
+    width: 100%; /* Make button full-width */
+    text-align: center; /* Center text */
+    box-sizing: border-box;
 }
 
-ul li a:hover {
+.list-group-item a:hover {
     background-color: #218838; /* Darker green on hover */
+    text-decoration: none;
+}
+
+.top-left-image {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 80px; /* Adjust size as needed */
+    height: auto;
 }

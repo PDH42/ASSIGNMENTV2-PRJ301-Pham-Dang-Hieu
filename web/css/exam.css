@@ -1,4 +1,4 @@
-/* Custom styles for the Lecturer Page */
+/* Custom styles for the Exam Schedule Page */
 body {
     font-family: Arial, sans-serif;
     background-color: darkorange;
@@ -30,7 +30,7 @@ body {
     color: #333;
 }
 
-h2 {
+h1 {
     color: #333;
     margin-bottom: 20px;
 }

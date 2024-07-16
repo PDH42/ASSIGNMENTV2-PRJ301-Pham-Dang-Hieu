@@ -15,6 +15,7 @@
     <c:if test="${sessionScope.user != null}">
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
+                <img src="../img/logo.png" class="top-left-image" alt="Logo"/>
                 <span class="navbar-text">Welcome, ${sessionScope.user.displayname} So Cute And Handsome (Lecturer)</span>
                 <div class="ml-auto">
                     <a class="btn btn-outline-primary" href="${pageContext.request.contextPath}/view/profile?username=${sessionScope.user.username}">View Profile</a>

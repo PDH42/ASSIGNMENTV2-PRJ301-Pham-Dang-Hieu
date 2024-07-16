@@ -140,3 +140,10 @@ th {
     background-color: #f2f2f2;
     font-weight: bold;
 }
+.top-left-image {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 100px; /* Increased size */
+    height: auto;
+}

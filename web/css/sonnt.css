@@ -1,3 +1,4 @@
+/* Custom styles for the Lecturer Page */
 body {
     font-family: Arial, sans-serif;
     background-color: darkorange;
@@ -17,21 +18,59 @@ body {
     align-items: center;
     padding: 10px 20px;
     box-sizing: border-box;
-    position: fixed;
-    top: 0;
-    left: 0;
     background-color: white;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     z-index: 1000;
 }
 
-.header-buttons {
+.header img.top-left-image {
+    width: 80px; /* Adjust size as needed */
+    height: auto;
+}
+
+.header .welcome {
+    flex-grow: 1;
+    text-align: center;
+    font-weight: bold;
+}
+
+.header .header-buttons {
     display: flex;
     align-items: center;
 }
 
-.logout, .home {
+.header .header-buttons form {
     margin: 0 10px;
+}
+
+.header .header-buttons .btn {
+    border: 1px solid;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.header .header-buttons .btn-outline-primary {
+    color: blue;
+    border-color: blue;
+    background-color: white;
+}
+
+.header .header-buttons .btn-outline-primary:hover {
+    background-color: blue;
+    color: white;
+}
+
+.header .header-buttons .btn-outline-danger {
+    color: red;
+    border-color: red;
+    background-color: white;
+}
+
+.header .header-buttons .btn-outline-danger:hover {
+    background-color: red;
+    color: white;
 }
 
 .container {
@@ -41,7 +80,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     width: 100%;
-    max-width: 800px;
+    max-width: 800px; /* Increased width */
     box-sizing: border-box;
     text-align: center;
 }
@@ -69,18 +108,4 @@ body {
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 20px;
-}
-
-input[type="submit"], .home-button {
-    background-color: green;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-}
-
-input[type="submit"]:hover, .home-button:hover {
-    background-color: darkgreen;
 }

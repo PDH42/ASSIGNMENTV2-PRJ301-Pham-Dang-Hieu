@@ -46,3 +46,10 @@ h2 {
 .table th, .table td {
     color: #333;
 }
+.top-left-image {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 100px; /* Increased size */
+    height: auto;
+}

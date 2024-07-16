@@ -13,17 +13,18 @@
 <body>
     <c:if test="${sessionScope.user != null}">
         <div class="header">
+            <img src="${pageContext.request.contextPath}/img/logo.png" class="top-left-image" alt="Logo"/>
             <div class="welcome">Welcome, ${sessionScope.user.displayname}</div>
             <div class="header-buttons">
-                <form action="${pageContext.request.contextPath}/logout" method="POST" class="logout">
-                    <input type="submit" value="Logout"/>
+                <form action="${pageContext.request.contextPath}/logout" method="POST">
+                    <button type="submit" class="btn btn-outline-danger">Logout</button>
                 </form>
             </div>
         </div>
     </c:if>
     <div class="container">
         <h2>Profile Lecturer</h2>
-        <img src="../img/sonnt.jpg" alt="Profile Picture" class="profile-picture"/>
+        <img src="${pageContext.request.contextPath}/img/sonnt.jpg" alt="Profile Picture" class="profile-picture"/>
         <div class="profile-info">
             <p><strong>Username:</strong> ${user.username}</p>
             <p><strong>Display Name:</strong> ${user.displayname}</p>

@@ -45,3 +45,10 @@ body {
 button[type="submit"] {
     margin-top: 20px;
 }
+.top-left-image {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 100px; /* Increased size */
+    height: auto;
+}

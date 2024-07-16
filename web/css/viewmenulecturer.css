@@ -34,17 +34,33 @@ h2 {
     margin-bottom: 20px;
 }
 
+.list-group-item {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0;
+}
+
 .list-group-item a {
     text-decoration: none;
     color: white;
     background-color: #28a745; /* Green color */
-    padding: 10px 15px;
+    padding: 10px 20px;
     border-radius: 5px;
     display: inline-block;
-    margin: 5px 0;
+    width: 100%; /* Make button full-width */
+    text-align: center; /* Center text */
+    box-sizing: border-box;
 }
 
 .list-group-item a:hover {
     background-color: #218838; /* Darker green on hover */
     text-decoration: none;
+}
+
+.top-left-image {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 100px; /* Increased size */
+    height: auto;
 }

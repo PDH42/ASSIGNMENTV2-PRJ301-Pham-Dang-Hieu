@@ -15,6 +15,7 @@
     <c:if test="${sessionScope.user != null}">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
+                <img src="../img/logo.png" class="top-left-image" alt="Logo"/>
                 <span class="navbar-text">Welcome, ${sessionScope.user.displayname}</span>
                 <div class="ml-auto">
                     <a href="${pageContext.request.contextPath}/student/dashboard" class="btn btn-outline-primary mr-2">Home</a>

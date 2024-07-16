@@ -44,6 +44,14 @@
         <servlet-name>InformationStudent</servlet-name>
         <servlet-class>controller.auth.InformationStudent</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ExamScheduleController</servlet-name>
+        <servlet-class>controller.exam.ExamScheduleController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StudentScheduleServlet</servlet-name>
+        <servlet-class>controller.exam.StudentScheduleServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ViewCourseByLecturerController</servlet-name>
         <url-pattern>/exam/lecturer</url-pattern>
@@ -87,5 +95,13 @@
     <servlet-mapping>
         <servlet-name>InformationStudent</servlet-name>
         <url-pattern>/student/info</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExamScheduleController</servlet-name>
+        <url-pattern>/student/exam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StudentScheduleServlet</servlet-name>
+        <url-pattern>/student/schedule</url-pattern>
     </servlet-mapping>
 </web-app>
