@@ -9,7 +9,7 @@
         <title>Student Schedule</title>
         <!-- Bootstrap CSS -->
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-        <link href="../css/schedule.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/css/schedule.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div class="container">
